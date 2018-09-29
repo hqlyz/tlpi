@@ -29,5 +29,10 @@ int main(int argc, char const *argv[])
         if(cp[j] == NULL)
             errExit("malloc");
     }
+    printf("Program break is now:          %10p\n", sbrk(0));
+    printf("Freeing blocks from %d to %d in steps of %d\n", freeMin, freeMax, freeStep);
+    for(j = freeMin - 1; j < freeMax; j += freeStep)
+        free(cp[j]);
+    printf("After free(), program break is:          %10p\n", sbrk(0));
     return 0;
 }
