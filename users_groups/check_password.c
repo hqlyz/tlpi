@@ -1,4 +1,4 @@
-#define _BSD_SOURCE
+#define _DEFAULT_SOURCE
 #define _XOPEN_SOURCE
 #include <unistd.h>
 #include <limits.h>
@@ -30,6 +30,23 @@ int main(int argc, char const *argv[])
     pwd = getpwnam(username);
     if(pwd == NULL)
         fatal("couldn't get password record");
-    
+    spwd = getspnam(username);
+    if(spwd == NULL && errno == EACCES)
+        fatal("no permission to read shadow password file");
+    if(spwd != NULL)
+        pwd->pw_passwd = spwd->sp_pwdp;
+    password = getpass("Password: ");
+    // Encrypt password and erase cleartext version immediately
+    encrypted = crypt(password, pwd->pw_passwd);
+    for(p = password; *p != '\0';)
+        *p++ = '\0';
+    if(encrypted == NULL)
+        errExit("crypt");
+    authOk = strcmp(encrypted, pwd->pw_passwd) == 0;
+    if(!authOk) {
+        printf("Incorrect password\n");
+        exit(EXIT_FAILURE);
+    }
+    printf("Successfully authenticated: UID=%ld\n", (long)pwd->pw_uid);
     return 0;
 }
