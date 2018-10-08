@@ -1,5 +1,6 @@
-#define _BSD_SOURCE
+#define _DEFAULT_SOURCE
 #include <sys/types.h>
+#include <sys/sysmacros.h>
 #include <sys/stat.h>
 #include <time.h>
 #include "file_perms.h"
@@ -43,7 +44,31 @@ static void displayStatInfo(const struct stat *sb) {
     printf("File size:                  %lld bytes\n", (long long)sb->st_size);
     printf("Optimal I/O block size:     %ld bytes\n", (long)sb->st_blksize);
     printf("512B blocks allocated:      %lld\n", (long long)sb->st_blocks);
-    printf("Last file access:           %s", ctime(&sb->st_atim));
-    printf("Last file modification:     %s", ctime(&sb->st_mtim));
-    printf("Last status change:         %s", ctime(&sb->st_ctim));
+    printf("Last file access:           %s", ctime(&sb->st_atim.tv_sec));
+    printf("Last file modification:     %s", ctime(&sb->st_mtim.tv_sec));
+    printf("Last status change:         %s", ctime(&sb->st_ctim.tv_sec));
+}
+
+int main(int argc, char const *argv[])
+{
+    struct stat sb;
+    Boolean statLink;
+    int fname;
+
+    statLink = (argc > 1) && strcmp(argv[1], "-l") == 0;
+    fname = statLink ? 2 : 1;
+
+    if(fname >= argc || argc > 1 && strcmp(argv[1], "--help") == 0)
+        usageErr("%s [-l] file\n"
+                "       -l = use lstat() instead of stat()\n", argv[0]);
+    if(statLink) {
+        if(lstat(argv[fname], &sb) == -1)
+            errExit("lstat");
+    } else {
+        if(stat(argv[fname], &sb) == -1)
+            errExit("stat");
+    }
+
+    displayStatInfo(&sb);
+    return 0;
 }
