@@ -7,7 +7,8 @@
 int getopt2(int argc, char *argv[], const char *str) {
     int find = 0;
     char *cp;
-    for(cp = *argv; *argv; *argv++) {
+    for(int i = 0; i < argc; i++) {
+        cp = argv[i];
         if(*cp != '-')
             continue;
         else if(strchr(str, *++cp) != 0)
@@ -56,24 +57,24 @@ static int dirTree(const char *pathname, const struct stat *sbuf,
 
 int main(int argc, char const *argv[])
 {
-    // int flags, opt;
+    int flags, opt;
 
-    // flags = 0;
-    // while((opt = getopt(argc, argv, "dmp")) != -1) {
-    //     switch(opt) {
-    //         case 'd': flags |= FTW_DEPTH;   break;            
-    //         case 'm': flags |= FTW_MOUNT;   break;            
-    //         case 'p': flags |= FTW_PHYS;    break;
-    //         default: usageError(argv[0], NULL);
-    //     }
-    // }
+    flags = 0;
+    while((opt = getopt(argc, argv, "dmp")) != -1) {
+        switch(opt) {
+            case 'd': flags |= FTW_DEPTH;   break;            
+            case 'm': flags |= FTW_MOUNT;   break;            
+            case 'p': flags |= FTW_PHYS;    break;
+            default: usageError(argv[0], NULL);
+        }
+    }
 
-    // if(nftw(".", dirTree, 10, flags) == -1) {
-    //     perror("ntfw");
-    //     exit(EXIT_FAILURE);
-    // }
+    if(nftw(".", dirTree, 10, flags) == -1) {
+        perror("ntfw");
+        exit(EXIT_FAILURE);
+    }
 
-    printf("%c\n", (char)getopt2(argc, argv, "dmp"));
+    // printf("%c\n", (char)getopt2(argc, argv, "dmp"));
 
     return 0;
 }
