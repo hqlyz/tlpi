@@ -3,6 +3,8 @@
         "tlpi_hdr.h": "c",
         "stdio.h": "c",
         "curr_time.h": "c",
-        "stat.h": "c"
+        "stat.h": "c",
+        "getopt.h": "c",
+        "getopt_core.h": "c"
     }
 }
