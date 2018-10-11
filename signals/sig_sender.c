@@ -13,7 +13,7 @@ int main(int argc, char const *argv[])
     numSigs = getInt(argv[2], GN_GT_0, "num-sigs");
     sig = getInt(argv[3], 0, "sig-num");
 
-    printf("%s: sending signal %d to process %ld %d times\n", 
+    printf("\n%s: sending signal %d to process %ld %d times\n", 
         argv[0], sig, (long)pid, numSigs);
     
     for(j = 0; j < numSigs; j++)
@@ -24,6 +24,6 @@ int main(int argc, char const *argv[])
         if(kill(pid, getInt(argv[4], 0, "sig-num-2")) == -1)
             errExit("kill");
 
-    printf("%s: exiting\n", argv[0]);
+    printf("\n%s: exiting\n", argv[0]);
     return 0;
 }
