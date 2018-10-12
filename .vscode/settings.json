@@ -6,6 +6,7 @@
         "stat.h": "c",
         "getopt.h": "c",
         "getopt_core.h": "c",
-        "limits.h": "c"
+        "limits.h": "c",
+        "signal.h": "c"
     }
 }

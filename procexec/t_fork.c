@@ -21,5 +21,8 @@ int main(int argc, char const *argv[])
 
     printf("PID=%ld %s idata=%d istack=%d\n", (long)getpid(),
         (childPid == 0) ? "(child) " : "(parent)", idata, istack);
+    // printf("Hello World!\n");
+    // fork();
+    // printf("lalala\n");
     return 0;
 }
