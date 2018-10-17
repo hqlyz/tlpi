@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "itimerspec_from_str.h"
 
-void itimerspec_from_str(char *str, struct itimerspec *tsp) {
+void itimerspecFromStr(char *str, struct itimerspec *tsp) {
     char *cptr, *sptr;
     cptr = strchr(str, ':');
     if(cptr != NULL)
