@@ -7,6 +7,7 @@
         "getopt.h": "c",
         "getopt_core.h": "c",
         "limits.h": "c",
-        "signal.h": "c"
+        "signal.h": "c",
+        "print_wait_status.h": "c"
     }
 }

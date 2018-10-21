@@ -13,8 +13,10 @@ void printWaitStatus(const char *msg, int status) {
     } else if(WIFSIGNALED(status)) {
         printf("child killed by signal %d (%s)",
             WTERMSIG(status), strsignal(WTERMSIG(status)));
+        #ifdef WCOREDUMP
         if(WCOREDUMP(status))
             printf(" (core dumped)");
+        #endif
         printf("\n");
     } else if(WIFSTOPPED(status)) {
         printf("child stopped by signal %d (%s)",
