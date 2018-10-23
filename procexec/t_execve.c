@@ -9,6 +9,7 @@ int main(int argc, char const *argv[])
         usageErr("%s pathname\n", argv[0]);
 
     argVec[0] = strrchr(argv[1], '/');
+    printf("argVec[0]: %s\n", argVec[0]);
     if(argVec[0] != NULL)
         argVec[0]++;
     else
