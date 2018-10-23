@@ -1,0 +1,5 @@
+#! ~/tlpi/proc/necho some argument
+necho.script
+hello world
+jerry
+goodbye
