@@ -49,5 +49,5 @@ int main(int argc, char const *argv[])
             "unexpectedly (%s)\n", fd, strerror(errno));
     else
         printf("write() on file descriptor %d succeeded\n", fd);
-    return 0;
+    return EXIT_SUCCESS;
 }
